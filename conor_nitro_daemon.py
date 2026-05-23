@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------
 # CONOR NITRO - Demonio de Integración Exclusivo para Linux
