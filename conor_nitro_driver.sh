@@ -33,7 +33,6 @@ echo 1 > functions/hid.usb0/subclass
 echo 4 > functions/hid.usb0/report_length  # Longitud de datos para transferencias rápidas
 
 # DESCRIPTOR HID GAMER (5 Botones + Ejes X/Y + Scroll):
-# Define los clics básicos, los 2 botones laterales (atrás/adelante) y el movimiento del sensor.
 echo -ne \\x05\\x01\\x09\\x02\\xa1\\x01\\x09\\x01\\xa1\\x00\\x05\\x09\\x19\\x01\\x29\\x05\\x15\\x00\\x25\\x01\\x95\\x05\\x75\\x01\\x81\\x02\\x95\\x01\\x75\\x03\\x81\\x03\\x05\\x01\\x09\\x30\\x09\\x31\\x09\\x38\\x15\\x81\\x25\\x7f\\x75\\x08\\x95\\x03\\x81\\x06\\xc0\\xc0 > functions/hid.usb0/report_desc
 
 # 5. Enlazar los botones y el sensor a la configuración del cable USB
@@ -44,3 +43,13 @@ ln -sf functions/hid.usb0 configs/c.1/
 # 6. Habilitar la línea de datos física (UDC)
 ls /sys/class/udc/ > UDC
 echo "Controlador CONOR NITRO cargado exitosamente en el bus USB."
+
+# =========================================================================
+# MEJORA DE AUTOMATIZACIÓN (TUNEADO PARA SISTEMA OPERATIVO PROPIO)
+# =========================================================================
+# Crea una regla UDEV automática para que Linux ejecute el sistema al conectar el cable
+UDEV_RULE="/etc/udev/rules.d/99-conor-nitro.rules"
+if [ ! -f "$UDEV_RULE" ]; then
+    echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0104", ACTION=="add", RUN+="/usr/local/bin/conor_nitro_daemon.py"' | tee "$UDEV_RULE" > /dev/null
+    echo "[Automatización] Regla de auto-arranque vinculada al hardware con éxito."
+fi
