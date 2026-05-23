@@ -1,30 +1,34 @@
-# 🐧 ¡Qué onda! Soy Conor-gamer 🚀
+# ⚡ CONOR NITRO - Smart Gaming Mouse Ecosystem
 
-Bienvenido a mi perfil oficial de GitHub. Soy un desarrollador y creador enfocado en llevar el ecosistema de Linux directo al hardware y los periféricos de la comunidad. 
+¡Bienvenido al repositorio oficial de **CONOR NITRO**, el periférico inteligente definitivo desarrollado exclusivamente para el ecosistema **Linux Native**!
 
-Mi meta actual es desarrollar proyectos nativos sobre el Kernel de Linux, demostrando que podemos crear dispositivos inteligentes, libres y abiertos, basados en la filosofía del software libre.
-
----
-
-## 🛠️ Proyectos Actuales
-
-### 🐭 Mouse OS (Gadget Inteligente Nativo)
-Estoy desarrollando una mini-distribución basada en el Kernel de Linux para periféricos. La idea es que el propio mouse sea una mini-computadora independiente que corra su propio sistema interno y se comporte como un dispositivo universal:
-* **Base 100% Linux Nativo:** Construido con scripts de automatización mediante el subsistema `ConfigFS` de Linux y controladores de kernel escritos en C.
-* **Actualizaciones OTA por Wi-Fi:** Con conectividad inalámbrica independiente para actualizar el firmware interno directo desde repositorios comunitarios, al suave estilo de distribuciones madre como **Debian**, **Fedora** o **Arch Linux**.
-* **Ecosistema de Hardware Libre:** Diseñado desde la raíz para expandirse próximamente hacia teclados y otros gadgets del equipo Linux, unificando todos tus periféricos bajo el mismo kernel.
+Este proyecto redefine las capacidades de los periféricos convencionales, transformando un dispositivo de alta precisión en un **núcleo central de conectividad y automatización** optimizado para entornos de desarrollo y productividad avanzada.
 
 ---
 
-## ⚙️ Mis Preferencias de Entorno
+## 🚀 Características del Ecosistema Avanzado
 
-* **Sistemas de Desarrollo:** Automatización en Python, Módulos de Kernel en C y Configuración de Distribuciones Embebidas de Linux.
-* **Filosofía:** Código Abierto, Transparencia de Software, Cero Obsolescencia Programada y Personalización Extrema.
-* **Inspiración:** La estabilidad de **Fedora**, la flexibilidad y control de **Arch Linux/Gentoo** y la robustez de los sistemas embebidos.
+* **⚡ Conectividad Inteligente Unificada:** Módulo nativo diseñado para la interconexión inalámbrica segura entre múltiples equipos basados en Linux, facilitando la sincronización inmediata del portapapeles universal y la transferencia ágil de archivos a través de la red local.
+* **💻 Utilidades de Sistema Integradas:** Accesos directos optimizados a nivel de hardware que permiten la apertura instantánea de la terminal de comandos y una navegación fluida entre múltiples escritorios virtuales.
+* **🔋 Gestión Eficiente de Rendimiento:** Control directo sobre los perfiles energéticos del procesador desde el propio periférico, alternando entre el modo de alto rendimiento para tareas de alta exigencia gráfica y el modo de ahorro energético para optimizar la autonomía.
+* **🎨 Arquitectura de Hardware Personalizada:** Lógica de control desarrollada en Python para la gestión precisa de rangos de sensibilidad (DPI) y la modulación de los patrones estéticos de iluminación RGB.
 
 ---
 
-## 🤝 Conectemos
-Si sos parte de la comunidad Linux y te apasiona el desarrollo de hardware abierto, los módulos de kernel o las mini-distros personalizadas, ¡este es tu lugar para colaborar! 
+## 📂 Estructura General del Proyecto
 
-*¡Hagamos que el hardware libre impulsado por Linux sea el estándar de la comunidad!*
+El ecosistema de software se distribuye en los siguientes módulos especializados:
+
+1. **`conor_nitro_driver.sh`**: Controlador base de la interfaz USB configurado mediante ConfigFS, complementado con reglas UDEV para garantizar un despliegue automático y eficiente al detectar el hardware.
+2. **`mouse_firmware.py`**: Núcleo lógico encargado del procesamiento de señales físicas, incluyendo la gestión de botones laterales, niveles de DPI y efectos de iluminación.
+3. **`conor_nitro_daemon.py`**: Servicio en segundo plano encargado de auditar el estado de la red y desplegar notificaciones visuales interactivas en el entorno gráfico del usuario.
+4. **`conor_nitro_share.py`**: Interfaz de comunicación encargada de coordinar la sincronización remota y el intercambio seguro de datos entre dispositivos de la red.
+5. **`conor_nitro_tools.py`**: Herramientas comunitarias de optimización multitarea, flujos de trabajo en terminal y administración de espacios de trabajo.
+
+---
+
+## 🔮 Visión de Desarrollo Tecnológico
+
+La meta definitiva de la arquitectura **CONOR NITRO** contempla la integración de almacenamiento de estado sólido no volátil dentro del circuito integrado del dispositivo. Esta innovación permitirá albergar una distribución autónoma y portable de Linux, haciendo posible inicializar un entorno operativo completo directamente desde la memoria interna del hardware.
+
+*Desarrollado con un firme compromiso hacia la innovación técnica y la libertad del software libre.* 🐧
