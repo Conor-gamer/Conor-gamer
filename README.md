@@ -1,34 +1,41 @@
-# ⚡ CONOR NITRO - Smart Gaming Mouse Ecosystem
+# ⚡ CONOR NITRO - Smart Gaming Ecosystem
 
-¡Bienvenido al repositorio oficial de **CONOR NITRO**, el periférico inteligente definitivo desarrollado exclusivamente para el ecosistema **Linux Native**!
+¡Bienvenido al ecosistema oficial de CONOR NITRO! La solución definitiva diseñada para llevar el rendimiento de tu hardware y tu experiencia de escritorio a un nivel superior. Este no es solo un sistema operativo; es una plataforma de alto rendimiento optimizada para quienes no aceptan menos que la perfección.
 
-Este proyecto redefine las capacidades de los periféricos convencionales, transformando un dispositivo de alta precisión en un **núcleo central de conectividad y automatización** optimizado para entornos de desarrollo y productividad avanzada.
+## 🎮 Ecosistema Dual: Performance Híbrido
+CONOR NITRO ha sido desarrollado bajo una arquitectura de "Sincronización Dual", capaz de gestionar dos mundos simultáneamente para ofrecerte una ventaja competitiva única:
+
+* **Modo Mouse (Hardware Edge):** Un núcleo de baja latencia que interactúa directamente con el hardware gaming. Este modo garantiza una respuesta instantánea y precisa, sin importar la carga del sistema.
+* **Modo PC (Desktop Flow):** Una interfaz gráfica limpia, estética y eficiente. Al pasar al entorno de escritorio, el sistema redistribuye los recursos dinámicamente, asegurando que tu flujo de trabajo sea tan fluido como tu partida de juego.
+
+## 🖱️ Control Total de Hardware: Sistema de 7 Botones
+El ecosistema CONOR NITRO implementa una gestión de bajo nivel que mapea cada interacción física del periférico para una respuesta instantánea:
+
+* **Botones Principales:** Clic izquierdo y derecho con gestión de debounce optimizada.
+* **Scroll Wheel:** Integración total con el sistema para un desplazamiento fluido y preciso.
+* **Botones Laterales (Adelante/Atrás):** Programados para navegación dinámica y macros tácticas.
+* **Botón DPI:** Control de sensibilidad en tiempo real gestionado por el sistema, permitiendo ajustes sin salir de la partida.
+* **Control RGB:** Gestión del ecosistema lumínico integrada para sincronización total.
+
+## 🚀 ¿Por qué elegir CONOR NITRO?
+* **Arquitectura Robusta:** Basado en sistemas inmutables, garantizando estabilidad a prueba de fallos.
+* **Estética Gamer:** Entorno visual optimizado con interfaz oscura minimalista.
+* **Control Total:** Gestión inteligente que se adapta a tus necesidades sin intervención manual.
+
+## 🛠 Especificaciones Técnicas
+* **Base:** openSUSE MicroOS (Transactional Server).
+* **Entorno:** XFCE personalizado (Arc-Dark / Papirus-Dark).
+* **Gestión:** Sistema de control de periféricos integrado en el núcleo.
+
+## 📂 Estructura del Ecosistema
+El núcleo de CONOR NITRO está compuesto por módulos especializados:
+
+* **conor_nitro_daemon.py**: El cerebro operativo. Gestiona la comunicación directa con el hardware.
+* **conor_nitro_tools.py**: Biblioteca de utilidades para procesamiento de datos.
+* **mouse_firmware.py**: Controlador dedicado al mapeo físico del dispositivo.
+* **setup_conor.sh**: Motor de despliegue automatizado para la configuración del entorno.
+* **conor_wallpaper.png**: Identidad visual oficial del sistema.
+* **config.kiwi**: Archivo maestro de configuración para la integración del SO.
 
 ---
-
-## 🚀 Características del Ecosistema Avanzado
-
-* **⚡ Conectividad Inteligente Unificada:** Módulo nativo diseñado para la interconexión inalámbrica segura entre múltiples equipos basados en Linux, facilitando la sincronización inmediata del portapapeles universal y la transferencia ágil de archivos a través de la red local.
-* **💻 Utilidades de Sistema Integradas:** Accesos directos optimizados a nivel de hardware que permiten la apertura instantánea de la terminal de comandos y una navegación fluida entre múltiples escritorios virtuales.
-* **🔋 Gestión Eficiente de Rendimiento:** Control directo sobre los perfiles energéticos del procesador desde el propio periférico, alternando entre el modo de alto rendimiento para tareas de alta exigencia gráfica y el modo de ahorro energético para optimizar la autonomía.
-* **🎨 Arquitectura de Hardware Personalizada:** Lógica de control desarrollada en Python para la gestión precisa de rangos de sensibilidad (DPI) y la modulación de los patrones estéticos de iluminación RGB.
-
----
-
-## 📂 Estructura General del Proyecto
-
-El ecosistema de software se distribuye en los siguientes módulos especializados:
-
-1. **`conor_nitro_driver.sh`**: Controlador base de la interfaz USB configurado mediante ConfigFS, complementado con reglas UDEV para garantizar un despliegue automático y eficiente al detectar el hardware.
-2. **`mouse_firmware.py`**: Núcleo lógico encargado del procesamiento de señales físicas, incluyendo la gestión de botones laterales, niveles de DPI y efectos de iluminación.
-3. **`conor_nitro_daemon.py`**: Servicio en segundo plano encargado de auditar el estado de la red y desplegar notificaciones visuales interactivas en el entorno gráfico del usuario.
-4. **`conor_nitro_share.py`**: Interfaz de comunicación encargada de coordinar la sincronización remota y el intercambio seguro de datos entre dispositivos de la red.
-5. **`conor_nitro_tools.py`**: Herramientas comunitarias de optimización multitarea, flujos de trabajo en terminal y administración de espacios de trabajo.
-
----
-
-## 🔮 Visión de Desarrollo Tecnológico
-
-La meta definitiva de la arquitectura **CONOR NITRO** contempla la integración de almacenamiento de estado sólido no volátil dentro del circuito integrado del dispositivo. Esta innovación permitirá albergar una distribución autónoma y portable de Linux, haciendo posible inicializar un entorno operativo completo directamente desde la memoria interna del hardware.
-
-*Desarrollado con un firme compromiso hacia la innovación técnica y la libertad del software libre.* 🐧
+*Desarrollado exclusivamente para gamers que buscan el control total. Bienvenido al siguiente nivel.*
