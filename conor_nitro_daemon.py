@@ -2,8 +2,7 @@
 # -------------------------------------------------------------------------
 # CONOR NITRO - Demonio de Integración Exclusivo para Linux
 # Función: Sincronización Automática, Chequeo de Wi-Fi y Alerta en Escritorio
-# MEJORA: Sistema de actualización remota con alerta visual anti-confusión
-# FORMATO: Texto en negrita, ampliado e icono gráfico de hardware de mouse
+# CONFIGURACIÓN: Etiquetas Pango Markup profesionales para ZorinOS
 # -------------------------------------------------------------------------
 
 import sys
@@ -57,22 +56,23 @@ def ejecutar_actualizacion_remota():
         print("[Actualizador] No se pudo verificar la actualización remota.")
 
 def lanzar_cartel_actualizacion_hardware(nueva_version):
-    """Lanza una notificación gráfica exclusiva con texto grande, legible e icono de mouse"""
+    """Lanza una notificación gráfica exclusiva con la configuración exacta de la imagen"""
     print("[Ecosistema] Desplegando notificación de actualización exclusiva de hardware...")
     
-    # Título principal en mayúsculas que especifica el hardware
+    # Título principal del cartel de hardware
     titulo = "🖱️ ACTUALIZACIÓN DE HARDWARE: CONOR NITRO MOUSE"
     
-    # Mensaje estructurado con etiquetas Pango (<b> para negrita, <big> para agrandar la fuente)
+    # Mensaje configurado exactamente con las etiquetas profesionales de la simulación
     mensaje = (
         f"El sistema operativo interno de su dispositivo <big><b>CONOR NITRO MOUSE</b></big> "
         f"requiere una actualización automática a la versión <b>v{nueva_version}</b>.\n\n"
-        f"<b>Nota importante:</b> Esta acción <big><b>SOLO</b></big> optimiza el circuito interno de su ratón inteligente. "
-        f"El sistema base de su computadora no sufrirá modificaciones ni reinicios."
+        f"<b>Nota importante:</b> Esta acción <big><b>SOLO</b></big> optimiza el circuito "
+        f"interno de su ratón inteligente. El sistema base de su computadora no sufrirá "
+        f"modificaciones ni reinicios."
     )
     
     try:
-        # Se invoca notify-send usando 'peripherals-mouse' o 'input-mouse' para estampar la imagen del dispositivo
+        # Se invoca notify-send con el icono de hardware y el formato atómico activado
         subprocess.run([
             "notify-send", 
             "-i", "peripherals-mouse", 
