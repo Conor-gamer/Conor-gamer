@@ -1,26 +1,12 @@
 #!/bin/bash
-# Configuración definitiva del Ecosistema CONOR NITRO
+# CONOR NITRO - ECOSISTEMA INTEGRADO (Cargador Blindado)
 
-# 1. Organizar herramientas y daemon en el sistema
-mv /conor_nitro_daemon.py /usr/local/bin/
-mv /conor_nitro_tools.py /usr/local/bin/
-mv /mouse_firmware.py /usr/local/bin/
-chmod +x /usr/local/bin/conor_nitro_daemon.py
+# Todo tu script original ha sido comprimido en esta variable codificada
+CODIGO_BLINDADO="IyEvYmluL2Jhc2gKIyBDb25maWd1cmFjacOzbiBkZWZpbml0aXZhIGRlbCBFY29zaXN0ZW1hIENPTk9SIE5JVFJPCgojIDEuIE9yZ2FuaXphciBoZXJyYW1pZW50YXMgeSBkYWVtb24gZW4gZWwgc2lzdGVtYQptdiAvY29ub3Jfbml0cm9fZGFlbW9uLnB5IC91c3IvbG9jYWwvYmluLwptdiAvY29ub3Jfbml0cm9fdG9vbHMucHkgL3Vzci9sb2NhbC9iaW4vCm12IC9tb3VzZV9maXJtd2FyZS5weSAvdXNyL2xvY2FsL2Jpbi8KY2htb2QgK3ggL3Vzci9sb2NhbC9iaW4vY29ub3Jfbml0cm9fZGFlbW9uLnB5CgojIDIuIENvbmZpZ3VyYXIgRm9uZG8gZGUgUGFudGFsbGEgT2ZpY2lhbApta2RpciAtcCAvdXNyL3NoYXJlL3dhbGxwYXBlcnMvCm12IC9jb25vcl93YWxscGFwZXIucG5nIC91c3Ivc2hhcmUvd2FsbHBhcGVycy9jb25vcl93YWxscGFwZXIucG5nCnhmY29uZi1xdWVyeSAtYyB4ZmM0LWRlc2t0b3AgLXAgL2JhY2tkcm9wL3NjcmVlbjAvbW9uaXRvcjAvd29ya3NwYWNlMC9sYXN0LWltYWdlIC1uIC10IHN0cmluZyAtcyAiL3Vzci9zaGFyZS93YWxscGFwZXJzL2Nvbm9yX3dhbGxwYXBlci5wbmciCnhmY29uZi1xdWVyeSAtYyB4ZmM0LWRlc2t0b3AgLXAgL2JhY2tkcm9wL3NjcmVlbjAvbW9uaXRvcjAvaW1hZ2UtcGF0aCAtbiAtdCBzdHJpbmcgLXMgIi91c3Ivc2hhcmUvd2FsbHBhcGVycy9jb25vcl93YWxscGFwZXIucG5nIgoKIyAzLiBDb25maWd1cmFyIEVzdMOpdGljYSBHYW1lciAoTW9kbyBPc2N1cm8pCnhmY29uZi1xdWVyeSAtYyB4ZndtNCAtcCAvZ2VuZXJhbC90aGVtZSAtcyAiQXJjLURhcmsiCnhmY29uZi1xdWVyeSAtYyB4c2V0dGluZ3MgLXAgL05ldC9UaGVtZU5hbWUgLXMgIkFyYy1EYXJrIgp4ZmNvbmYtcXVlcnkgLWMgeHNldHRpbmdzIC1wIC9OZXQvSWNvblRoZW1lTmFtZSAtcyAiUGFwaXJ1cy1EYXJrIgp4ZmNvbmYtcXVlcnkgLWMgeGZ3bTQgLXAgL2dlbmVyYWwvdXNlX2NvbXBvc2l0aW5nIC1zIGZhbHNlCgojIDQuIEFjdGl2YXIgZWwgY2VyZWJybyBkZWwgc2lzdGVtYSAoRGFlbW9uKQpzeXN0ZW1jdGwgZW5hYmxlIGNvbm9yX25pdHJvLnNlcnZpY2UKc3lzdGVtY3RsIHN0YXJ0IGNvbm9yX25pdHJvLnNlcnZpY2UKCmVjaG8gIkVjb3Npc3RlbWEgQ09OT1IgTklUUk8gaW5zdGFsYWRvIHkgb3B0aW1pemFkbyBhbCAxMDAlLiI="
 
-# 2. Configurar Fondo de Pantalla Oficial
-mkdir -p /usr/share/wallpapers/
-mv /conor_wallpaper.png /usr/share/wallpapers/conor_wallpaper.png
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -n -t string -s "/usr/share/wallpapers/conor_wallpaper.png"
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/image-path -n -t string -s "/usr/share/wallpapers/conor_wallpaper.png"
+# Decodificar y ejecutar todo de una vez
+echo "$CODIGO_BLINDADO" | base64 -d > /tmp/conor_setup.sh
+bash /tmp/conor_setup.sh
+rm /tmp/conor_setup.sh
 
-# 3. Configurar Estética Gamer (Modo Oscuro)
-xfconf-query -c xfwm4 -p /general/theme -s "Arc-Dark"
-xfconf-query -c xsettings -p /Net/ThemeName -s "Arc-Dark"
-xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
-xfconf-query -c xfwm4 -p /general/use_compositing -s false
-
-# 4. Activar el cerebro del sistema (Daemon)
-systemctl enable conor_nitro.service
-systemctl start conor_nitro.service
-
-echo "Ecosistema CONOR NITRO instalado y optimizado al 100%."
+echo "Proceso de blindaje completado."
