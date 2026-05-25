@@ -27,6 +27,8 @@
         <file name="conor_nitro_tools.py" target="/"/>
         <file name="mouse_firmware.py" target="/"/>
         <file name="conor_wallpaper.png" target="/"/>
+        <file name="conor-gamer-os" target="/usr/share/plymouth/themes/"/>
+        <file name="conor_menu_icon.svg" target="/usr/share/icons/hicolor/scalable/apps/"/>
     </files>
     <scripts>
         <postinclude file="setup_conor.sh"/>
