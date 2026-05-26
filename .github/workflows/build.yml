@@ -11,13 +11,16 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v3
 
-      - name: Instalar KIWI
+      - name: Instalar dependencias necesarias
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-kiwi python3-setuptools
+          # Instalamos kiwi y herramientas básicas de empaquetado
+          sudo apt-get install -y python3-kiwi python3-setuptools xorriso qemu-utils
 
       - name: Compilar la ISO
         run: |
+          # Ejecutamos el comando de compilación
+          # Asegurate de que tu archivo de configuración (config.kiwi) esté en la raíz
           sudo kiwi-ng system build --description . --target-dir /tmp/conor-iso
 
       - name: Subir el resultado
