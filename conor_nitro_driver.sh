@@ -45,9 +45,19 @@ ls /sys/class/udc/ > UDC
 echo "Controlador CONOR NITRO cargado exitosamente en el bus USB."
 
 # =========================================================================
-# MEJORA DE AUTOMATIZACIÓN (TUNEADO PARA SISTEMA OPERATIVO PROPIO)
+# AUTOMATIZACIÓN E INSTALACIÓN DE RECURSOS
 # =========================================================================
-# Crea una regla UDEV automática para que Linux ejecute el sistema al conectar el cable
+
+# A. Descompresión de recursos (Ahora el sistema los jala automáticamente)
+if [ -f "/tmp/conor-recursos.zip" ]; then
+    echo "Detectando paquete de recursos, instalando en /opt/..."
+    mkdir -p /opt/conor-recursos
+    unzip -o /tmp/conor-recursos.zip -d /opt/conor-recursos/
+    chmod +x /opt/conor-recursos/*
+    rm /tmp/conor-recursos.zip
+fi
+
+# B. Regla UDEV para el daemon
 UDEV_RULE="/etc/udev/rules.d/99-conor-nitro.rules"
 if [ ! -f "$UDEV_RULE" ]; then
     echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0104", ACTION=="add", RUN+="/usr/local/bin/conor_nitro_daemon.py"' | tee "$UDEV_RULE" > /dev/null
