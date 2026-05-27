@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# --- Conor Daemon ---
+# El corazón de Conor Connect: escucha al celular y gestiona la duplicación
+
+echo "Iniciando Conor Daemon en segundo plano..."
+
+# Definimos el puerto de comunicación
+PORT=8080
+
+# Bucle infinito para que el servicio nunca se detenga
+while true; do
+    echo "Esperando conexión desde el celular..."
+    
+    # Escucha la conexión en el puerto definido
+    nc -l -p $PORT > /dev/null
+    
+    echo "Conexión recibida, procesando..."
+done
