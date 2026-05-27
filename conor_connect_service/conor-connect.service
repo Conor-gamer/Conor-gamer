@@ -1,0 +1,11 @@
+[Unit]
+Description=Conor Connect Service
+After=network.target
+
+[Service]
+ExecStart=/opt/conor-connect/conor-daemon
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
