@@ -1,22 +1,22 @@
 #!/bin/bash
 
-# --- Conor RGB Controller ---
-# Sincroniza el estado de Conor Connect con el sistema de iluminación
+# --- Script de Instalación Final para Conor GamerOS ---
 
-echo "Configurando perfil RGB para Conor Connect..."
+# 1. Mover los archivos a la carpeta del sistema
+sudo mkdir -p /opt/conor-connect
+sudo cp conor-daemon /opt/conor-connect/
+sudo cp conor-bridge.sh /opt/conor-connect/
+sudo cp conor-rgb.sh /opt/conor-connect/
 
-# Definimos el color de conexión activa (Modo Gamer: Verde Nitro)
-COLOR="00FF00"
+# 2. Instalar el servicio de systemd
+sudo cp conor-connect.service /etc/systemd/system/
 
-# Función para aplicar el color al sistema
-set_led_color() {
-    echo "Aplicando estilo visual $COLOR..."
-    # Aquí podés integrar la llamada a los drivers de tus periféricos
-    # Ejemplo genérico para la controladora:
-    # echo $1 > /sys/class/leds/conor-led/brightness
-}
+# 3. Dar permisos de ejecución
+sudo chmod +x /opt/conor-connect/*
 
-# Ejecutar el cambio de color
-set_led_color $COLOR
+# 4. Activar el servicio
+sudo systemctl daemon-reload
+sudo systemctl enable conor-connect
+sudo systemctl start conor-connect
 
-echo "Estética Conor Connect aplicada. Todo listo."
+echo "Conor Connect instalado y corriendo en el sistema."
