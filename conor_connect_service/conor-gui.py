@@ -5,13 +5,21 @@ import sys
 import socket
 import webbrowser
 gi.require_version("Gtk", "3.0")
-gi.require_version("AppIndicator3", "0.1")
-from gi.repository import Gtk, AppIndicator3
+from gi.repository import Gtk, Gdk
 
 class ConorApp:
     def __init__(self):
-        # Al cerrar la ventana principal, matamos todo el proceso
+        # 1. Actualización automática antes de iniciar
+        self.verificar_actualizaciones()
         self.main_window = None
+
+    def verificar_actualizaciones(self):
+        try:
+            # Hace el pull silencioso para actualizar
+            subprocess.run(["git", "-C", "/opt/conor-connect", "pull", "origin", "main"], 
+                           capture_output=True, text=True)
+        except Exception as e:
+            print(f"No se pudo actualizar: {e}")
 
     def descargar_apk(self, widget):
         url = "https://github.com/Conor-gamer/Conor-gamer/releases/latest"
@@ -20,9 +28,12 @@ class ConorApp:
     def abrir_ventana(self):
         nombre_pc = socket.gethostname()
         self.main_window = Gtk.Window(title="Conor Connect")
-        self.main_window.set_default_size(450, 450)
         
-        # Conectar el cierre de la ventana con el cierre total de la app
+        # 2. Pantalla completa y siempre al frente
+        self.main_window.fullscreen()
+        self.main_window.set_keep_above(True)
+        
+        # Conectar el cierre de la ventana con el cierre total
         self.main_window.connect("destroy", Gtk.main_quit)
         
         header = Gtk.HeaderBar()
@@ -47,7 +58,6 @@ class ConorApp:
         # Botón APK
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
         btn_apk = Gtk.Button()
-        # Asegurate que este archivo exista en /opt/conor-connect/
         img_path = "/opt/conor-connect/boton_apk.png"
         if os.path.exists(img_path):
             imagen_boton = Gtk.Image.new_from_file(img_path)
