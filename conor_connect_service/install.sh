@@ -13,7 +13,8 @@ sudo mkdir -p /opt/conor-connect
 echo "Copiando archivos..."
 sudo cp conor-daemon /opt/conor-connect/
 sudo cp conor-gui.py /opt/conor-connect/
-sudo cp icon.png /opt/conor-connect/
+# Aquí renombramos tu archivo 'sdp' a 'icon.png' para que el sistema lo reconozca
+sudo cp sdp /opt/conor-connect/icon.png
 
 # Dar permisos de ejecución
 sudo chmod +x /opt/conor-connect/conor-daemon
@@ -43,4 +44,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable conor-connect
 sudo systemctl restart conor-connect
 
-echo "¡Instalación completada con éxito, vos! Conor Connect ya está volando."
+echo "¡Instalación completada con éxito, vos! Conor Connect ya está volando con su icono."
