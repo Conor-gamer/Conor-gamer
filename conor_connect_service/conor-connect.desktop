@@ -1,11 +1,14 @@
 [Desktop Entry]
+Version=1.0
+Type=Application
 Name=Conor Connect
-GenericName=Conexión de Dispositivos
-Comment=Conecta tu celular con Conor Connect
-Exec=/opt/conor-connect/conor-gui.py
+GenericName=Conector de Dispositivos
+Comment=Gestiona la vinculación de tus dispositivos Android
+Exec=python3 /opt/conor-connect/conor-gui.py
 Icon=/opt/conor-connect/icon.png
 Terminal=false
-Type=Application
-Categories=Utility;GTK;Network;
-Keywords=connect;phone;sync;
+Categories=Utility;Network;GTK;
+Keywords=connect;android;devices;
 StartupNotify=true
+X-GNOME-Autostart-enabled=true
+
