@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Conor Connect
+GenericName=Conexión de Dispositivos
+Comment=Conecta tu celular con Conor Connect
+Exec=/opt/conor-connect/conor-gui.py
+Icon=/opt/conor-connect/icon.png
+Terminal=false
+Type=Application
+Categories=Utility;GTK;Network;
+Keywords=connect;phone;sync;
+StartupNotify=true
