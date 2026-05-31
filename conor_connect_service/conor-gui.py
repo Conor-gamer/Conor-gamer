@@ -40,7 +40,10 @@ class ConorApp:
     def abrir_ventana(self):
         nombre_pc = socket.gethostname()
         self.main_window = Gtk.Window(title="Conor Connect")
-        self.main_window.fullscreen()
+        
+        # --- Ventana Maximizada ---
+        self.main_window.maximize() 
+        
         self.main_window.set_keep_above(True)
         self.main_window.connect("destroy", Gtk.main_quit)
         
@@ -63,7 +66,7 @@ class ConorApp:
         frame.add(box_disp)
         main_box.pack_start(frame, False, False, 0)
 
-        # Configuración con Autoguardado
+        # Configuración
         main_box.pack_start(Gtk.Label(label="<b>Configuración</b>", use_markup=True, xalign=0), False, False, 0)
         switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         switch_box.pack_start(Gtk.Label(label="Conor Connect activo mientras bloqueado"), True, True, 0)
@@ -74,19 +77,23 @@ class ConorApp:
         switch_box.pack_start(self.switch, False, False, 0)
         main_box.pack_start(switch_box, False, False, 0)
 
-        # Botón APK
+        # Botón APK Grande y llamativo
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
         btn_apk = Gtk.Button()
+        btn_apk.set_size_request(-1, 80) # Botón alto
+        
         img_path = "/opt/conor-connect/boton_apk.png"
         if os.path.exists(img_path):
             imagen_boton = Gtk.Image.new_from_file(img_path)
             btn_apk.add(imagen_boton)
         else:
-            btn_apk.set_label("Descargar APK")
+            label_btn = Gtk.Label()
+            label_btn.set_markup("<span size='x-large' weight='bold'>DESCARGAR APK</span>")
+            btn_apk.add(label_btn)
             
         btn_apk.connect("clicked", self.descargar_apk)
-        btn_apk.set_relief(Gtk.ReliefStyle.NONE)
-        main_box.pack_start(btn_apk, False, False, 0)
+        btn_apk.set_relief(Gtk.ReliefStyle.NORMAL)
+        main_box.pack_start(btn_apk, False, False, 10)
 
         self.main_window.show_all()
 
