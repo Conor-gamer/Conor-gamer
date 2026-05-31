@@ -4,18 +4,30 @@ import os
 import sys
 import socket
 import webbrowser
+import json
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
 class ConorApp:
     def __init__(self):
-        # 1. Actualización automática antes de iniciar
         self.verificar_actualizaciones()
+        self.config_file = "/opt/conor-connect/config.json"
+        self.config = self.cargar_config()
         self.main_window = None
+
+    def cargar_config(self):
+        if os.path.exists(self.config_file):
+            with open(self.config_file, "r") as f:
+                return json.load(f)
+        return {"activo": False}
+
+    def guardar_config(self, widget=None, state=None):
+        self.config["activo"] = self.switch.get_active()
+        with open(self.config_file, "w") as f:
+            json.dump(self.config, f)
 
     def verificar_actualizaciones(self):
         try:
-            # Hace el pull silencioso para actualizar
             subprocess.run(["git", "-C", "/opt/conor-connect", "pull", "origin", "main"], 
                            capture_output=True, text=True)
         except Exception as e:
@@ -28,12 +40,8 @@ class ConorApp:
     def abrir_ventana(self):
         nombre_pc = socket.gethostname()
         self.main_window = Gtk.Window(title="Conor Connect")
-        
-        # 2. Pantalla completa y siempre al frente
         self.main_window.fullscreen()
         self.main_window.set_keep_above(True)
-        
-        # Conectar el cierre de la ventana con el cierre total
         self.main_window.connect("destroy", Gtk.main_quit)
         
         header = Gtk.HeaderBar()
@@ -54,6 +62,17 @@ class ConorApp:
         box_disp.pack_start(Gtk.Label(label="Buscando dispositivos..."), True, True, 0)
         frame.add(box_disp)
         main_box.pack_start(frame, False, False, 0)
+
+        # Configuración con Autoguardado
+        main_box.pack_start(Gtk.Label(label="<b>Configuración</b>", use_markup=True, xalign=0), False, False, 0)
+        switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        switch_box.pack_start(Gtk.Label(label="Conor Connect activo mientras bloqueado"), True, True, 0)
+        
+        self.switch = Gtk.Switch()
+        self.switch.set_active(self.config.get("activo", False))
+        self.switch.connect("notify::active", self.guardar_config)
+        switch_box.pack_start(self.switch, False, False, 0)
+        main_box.pack_start(switch_box, False, False, 0)
 
         # Botón APK
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
