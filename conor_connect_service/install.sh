@@ -13,8 +13,8 @@ sudo mkdir -p /opt/conor-connect
 echo "Copiando archivos..."
 sudo cp conor-daemon /opt/conor-connect/
 sudo cp conor-gui.py /opt/conor-connect/
-# Aquí renombramos tu archivo 'sdp' a 'icon.png' para que el sistema lo reconozca
-sudo cp sdp /opt/conor-connect/icon.png
+# Aquí usamos tu archivo icon.png directamente
+sudo cp icon.png /opt/conor-connect/
 
 # Dar permisos de ejecución
 sudo chmod +x /opt/conor-connect/conor-daemon
