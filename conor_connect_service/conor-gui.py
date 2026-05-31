@@ -24,7 +24,6 @@ class ConorApp:
         self.indicator.set_menu(self.menu)
 
     def descargar_apk(self, widget):
-        # AQUÍ PONÉS EL LINK DE TU APK DE GITHUB
         url = "https://github.com/Conor-gamer/Conor-gamer/releases/latest"
         webbrowser.open(url)
 
@@ -60,11 +59,18 @@ class ConorApp:
         switch_box.pack_start(Gtk.Switch(), False, False, 0)
         main_box.pack_start(switch_box, False, False, 0)
 
-        # Botón APK (Acción agregada)
+        # Botón APK usando la imagen boton_apk.png
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
-        btn_apk = Gtk.Button(label="   APK  Descargar APK para Android")
+        
+        btn_apk = Gtk.Button()
+        # Cargamos el archivo de imagen que guardamos en la carpeta
+        imagen_boton = Gtk.Image.new_from_file("/opt/conor-connect/boton_apk.png")
+        btn_apk.add(imagen_boton)
+        
         btn_apk.connect("clicked", self.descargar_apk)
-        btn_apk.set_size_request(200, 60)
+        # Esto hace que el botón se vea limpio sin bordes extraños
+        btn_apk.set_relief(Gtk.ReliefStyle.NONE)
+        
         main_box.pack_start(btn_apk, False, False, 0)
 
         ventana.show_all()
