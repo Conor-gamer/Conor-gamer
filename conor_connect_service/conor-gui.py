@@ -10,38 +10,30 @@ from gi.repository import Gtk, AppIndicator3
 
 class ConorApp:
     def __init__(self):
-        self.indicator = AppIndicator3.Indicator.new("conor-connect", "icon", AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
-        self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
-        self.indicator.set_icon_full("/opt/conor-connect/icon.png", "Conor")
-        self.menu = Gtk.Menu()
-        item_abrir = Gtk.MenuItem(label="Abrir Conor Connect")
-        item_abrir.connect("activate", self.abrir_ventana)
-        self.menu.append(item_abrir)
-        item_salir = Gtk.MenuItem(label="Salir")
-        item_salir.connect("activate", Gtk.main_quit)
-        self.menu.append(item_salir)
-        self.menu.show_all()
-        self.indicator.set_menu(self.menu)
+        # Al cerrar la ventana principal, matamos todo el proceso
+        self.main_window = None
 
     def descargar_apk(self, widget):
         url = "https://github.com/Conor-gamer/Conor-gamer/releases/latest"
         webbrowser.open(url)
 
-    def abrir_ventana(self, widget):
+    def abrir_ventana(self):
         nombre_pc = socket.gethostname()
-        ventana = Gtk.Window(title="Conor Connect")
-        ventana.set_default_size(450, 450)
+        self.main_window = Gtk.Window(title="Conor Connect")
+        self.main_window.set_default_size(450, 450)
         
-        # Header con el nombre de tu compu
+        # Conectar el cierre de la ventana con el cierre total de la app
+        self.main_window.connect("destroy", Gtk.main_quit)
+        
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         header.props.title = "Conor Connect"
         header.props.subtitle = nombre_pc
-        ventana.set_titlebar(header)
+        self.main_window.set_titlebar(header)
         
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
         main_box.set_border_width(20)
-        ventana.add(main_box)
+        self.main_window.add(main_box)
 
         # Dispositivos
         main_box.pack_start(Gtk.Label(label="<b>Dispositivos</b>", use_markup=True, xalign=0), False, False, 0)
@@ -52,30 +44,24 @@ class ConorApp:
         frame.add(box_disp)
         main_box.pack_start(frame, False, False, 0)
 
-        # Configuración
-        main_box.pack_start(Gtk.Label(label="<b>Configuración de la extensión</b>", use_markup=True, xalign=0), False, False, 0)
-        switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        switch_box.pack_start(Gtk.Label(label="Conor Connect activo mientras bloqueado"), True, True, 0)
-        switch_box.pack_start(Gtk.Switch(), False, False, 0)
-        main_box.pack_start(switch_box, False, False, 0)
-
-        # Botón APK usando la imagen boton_apk.png
+        # Botón APK
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
-        
         btn_apk = Gtk.Button()
-        # Cargamos el archivo de imagen que guardamos en la carpeta
-        imagen_boton = Gtk.Image.new_from_file("/opt/conor-connect/boton_apk.png")
-        btn_apk.add(imagen_boton)
-        
+        # Asegurate que este archivo exista en /opt/conor-connect/
+        img_path = "/opt/conor-connect/boton_apk.png"
+        if os.path.exists(img_path):
+            imagen_boton = Gtk.Image.new_from_file(img_path)
+            btn_apk.add(imagen_boton)
+        else:
+            btn_apk.set_label("Descargar APK")
+            
         btn_apk.connect("clicked", self.descargar_apk)
-        # Esto hace que el botón se vea limpio sin bordes extraños
         btn_apk.set_relief(Gtk.ReliefStyle.NONE)
-        
         main_box.pack_start(btn_apk, False, False, 0)
 
-        ventana.show_all()
-        ventana.present()
+        self.main_window.show_all()
 
 if __name__ == "__main__":
     app = ConorApp()
+    app.abrir_ventana()
     Gtk.main()
