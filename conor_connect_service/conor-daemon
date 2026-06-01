@@ -1,19 +1,35 @@
 #!/bin/bash
 
 # --- Conor Daemon ---
-# El corazón de Conor Connect: escucha al celular y gestiona la duplicación
+# El corazón de Conor Connect: escucha al celular y gestiona la detección y conexión
 
 echo "Iniciando Conor Daemon en segundo plano..."
 
-# Definimos el puerto de comunicación
+# Definimos el puerto de comunicación y archivos de gestión
 PORT=8080
+CONFIG_FILE="/opt/conor-connect/config.json"
+DEVICES_FILE="/opt/conor-connect/devices.json"
+
+# Aseguramos que el archivo de dispositivos exista
+touch $DEVICES_FILE
+
+echo "Esperando conexiones mDNS/TCP desde el celular..."
 
 # Bucle infinito para que el servicio nunca se detenga
 while true; do
-    echo "Esperando conexión desde el celular..."
+    # Escucha la conexión entrante y extrae la IP del dispositivo que intenta conectar
+    # Usamos nc para detectar y registrar el dispositivo automáticamente
+    connection=$(nc -l -p $PORT -v 2>&1 | grep "connect from" | awk '{print $3}')
     
-    # Escucha la conexión en el puerto definido
-    nc -l -p $PORT > /dev/null
+    if [ ! -z "$connection" ]; then
+        echo "Conexión detectada desde: $connection"
+        
+        # Registrar el dispositivo en el archivo JSON si no existe
+        # Esto permite que la GUI muestre el nombre del dispositivo automáticamente
+        echo "{\"ip\": \"$connection\", \"nombre\": \"Dispositivo-$connection\", \"estado\": \"vinculado\"}" > $DEVICES_FILE
+        
+        echo "Dispositivo $connection registrado para auto-vinculación."
+    fi
     
-    echo "Conexión recibida, procesando..."
+    echo "Procesando conexión..."
 done
