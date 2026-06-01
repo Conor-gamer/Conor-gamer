@@ -37,11 +37,19 @@ class ConorApp:
         url = "https://github.com/Conor-gamer/Conor-gamer/releases/latest"
         webbrowser.open(url)
 
+    def actualizar_estado(self, switch, gparam):
+        is_active = switch.get_active()
+        if is_active:
+            self.label_status.set_text("Conor Connect: Activado")
+            subprocess.run(["pkexec", "systemctl", "start", "conor-connect"]) 
+        else:
+            self.label_status.set_text("Conor Connect: Desactivado")
+            subprocess.run(["pkexec", "systemctl", "stop", "conor-connect"])
+        self.guardar_config()
+
     def abrir_ventana(self):
         nombre_pc = socket.gethostname()
         self.main_window = Gtk.Window(title="Conor Connect")
-        
-        # --- Ventana Maximizada ---
         self.main_window.maximize() 
         self.main_window.set_keep_above(True)
         self.main_window.connect("destroy", Gtk.main_quit)
@@ -65,42 +73,39 @@ class ConorApp:
         frame.add(box_disp)
         main_box.pack_start(frame, False, False, 0)
 
-        # Configuración
+        # Configuración con interruptor activo/desactivado
         main_box.pack_start(Gtk.Label(label="<b>Configuración</b>", use_markup=True, xalign=0), False, False, 0)
         switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        switch_box.pack_start(Gtk.Label(label="Conor Connect activo mientras bloqueado"), True, True, 0)
+        
+        estado_inicial = "Activado" if self.config.get("activo", False) else "Desactivado"
+        self.label_status = Gtk.Label(label=f"Conor Connect: {estado_inicial}")
+        switch_box.pack_start(self.label_status, True, True, 0)
         
         self.switch = Gtk.Switch()
         self.switch.set_active(self.config.get("activo", False))
-        self.switch.connect("notify::active", self.guardar_config)
+        self.switch.connect("notify::active", self.actualizar_estado)
         switch_box.pack_start(self.switch, False, False, 0)
         main_box.pack_start(switch_box, False, False, 0)
 
-        # Botón APK Integrado Elegante
+        # Botón APK Integrado
         main_box.pack_start(Gtk.Label(label="<b>Aplicación móvil</b>", use_markup=True, xalign=0), False, False, 0)
-        
         btn_apk = Gtk.Button()
         btn_apk.set_size_request(-1, 100)
-        
         box_btn = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
         box_btn.set_halign(Gtk.Align.CENTER)
         
-        # Ruta corregida: /opt/conor-connect/assets/boton_apk.png
         img_path = "/opt/conor-connect/assets/boton_apk.png"
-        
         if os.path.exists(img_path):
             imagen_boton = Gtk.Image.new_from_file(img_path)
             box_btn.pack_start(imagen_boton, False, False, 0)
             
         label_btn = Gtk.Label()
-        label_btn.set_markup("<span size='large' weight='bold' color='#FFFFFF'>Descargar APK para Android</span>")
+        label_btn.set_markup("<span size='large' weight='bold'>Descargar APK para Android</span>")
         box_btn.pack_start(label_btn, False, False, 0)
         
         btn_apk.add(box_btn)
         btn_apk.connect("clicked", self.descargar_apk)
-        # Esto ayuda con el estilo redondeado del sistema
         btn_apk.get_style_context().add_class("suggested-action")
-        
         main_box.pack_start(btn_apk, False, False, 10)
 
         self.main_window.show_all()
