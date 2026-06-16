@@ -1,47 +1,46 @@
 #!/bin/bash
 
-# Instalar dependencias necesarias para la interfaz y el sistema
-echo "Instalando dependencias necesarias..."
-sudo apt update
-sudo apt install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-appindicator3-0.1
+# --- Conor Connect: Instalador de Ultra Potencia ---
 
-# Crear carpeta de instalación
+# Definir colores para feedback profesional
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo -e "${GREEN}Iniciando instalación de Conor Connect...${NC}"
+
+# 1. Verificar dependencias del sistema (Instalación automática de herramientas base)
+echo "Verificando dependencias necesarias..."
+sudo apt update && sudo apt install -y xdotool ffmpeg netcat-traditional || echo -e "${RED}Error al instalar dependencias base${NC}"
+
+# 2. Preparar estructura de carpetas
 echo "Configurando directorios..."
-sudo mkdir -p /opt/conor-connect
+sudo mkdir -p /opt/conor-connect/assets
+sudo mkdir -p /var/log/conor-connect/
 
-# Copiar archivos del proyecto
-echo "Copiando archivos..."
+# 3. Despliegue de archivos
+echo "Desplegando componentes..."
 sudo cp conor-daemon /opt/conor-connect/
-sudo cp conor-gui.py /opt/conor-connect/
-# Aquí usamos tu archivo icon.png directamente
-sudo cp icon.png /opt/conor-connect/
+sudo cp conor-bridge.sh /opt/conor-connect/
+sudo cp conor-rgb.sh /opt/conor-connect/
+sudo cp icon.png /opt/conor-connect/assets/
+# Asegurar que el archivo de configuración exista para evitar errores
+sudo touch /opt/conor-connect/config.json
+sudo chmod 666 /opt/conor-connect/config.json
 
-# Dar permisos de ejecución
-sudo chmod +x /opt/conor-connect/conor-daemon
-sudo chmod +x /opt/conor-connect/conor-gui.py
+# 4. Configuración del Servicio de Sistema
+echo "Instalando servicio systemd..."
+sudo cp conor-connect.service /etc/systemd/system/
 
-# Configurar el lanzador de la aplicación
-echo "Creando acceso directo en el sistema..."
-sudo cp conor-connect.desktop /usr/share/applications/
+# 5. Permisos de seguridad y ejecución
+echo "Aplicando permisos de ejecución..."
+sudo chmod +x /opt/conor-connect/*
 
-# Configurar y activar el servicio de fondo
-echo "Activando el servicio Conor Connect..."
-cat <<EOF | sudo tee /etc/systemd/system/conor-connect.service
-[Unit]
-Description=Conor Connect Service
-After=network.target
-
-[Service]
-ExecStart=/opt/conor-connect/conor-daemon
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
+# 6. Activación del servicio con manejo de errores
+echo "Activando el corazón del sistema..."
 sudo systemctl daemon-reload
-sudo systemctl enable conor-connect
-sudo systemctl restart conor-connect
-
-echo "¡Instalación completada con éxito, vos! Conor Connect ya está volando con su icono."
+if sudo systemctl enable conor-connect && sudo systemctl restart conor-connect; then
+    echo -e "${GREEN}¡Instalación exitosa! Conor Connect está corriendo al máximo rendimiento.${NC}"
+else
+    echo -e "${RED}Error al activar el servicio. Revisa los logs en /var/log/syslog${NC}"
+fi
