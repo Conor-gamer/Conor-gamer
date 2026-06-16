@@ -1,35 +1,41 @@
 #!/bin/bash
 
-# --- Conor Daemon ---
-# El corazón de Conor Connect: escucha al celular y gestiona la detección y conexión
+# --- Conor Daemon PRO: Ultra Potente ---
+# Gestiona detección automática, registro de dispositivos y ejecución de comandos
 
-echo "Iniciando Conor Daemon en segundo plano..."
-
-# Definimos el puerto de comunicación y archivos de gestión
 PORT=8080
-CONFIG_FILE="/opt/conor-connect/config.json"
+LOG_FILE="/var/log/conor-connect.log"
 DEVICES_FILE="/opt/conor-connect/devices.json"
 
-# Aseguramos que el archivo de dispositivos exista
+echo "Iniciando Daemon PRO..."
 touch $DEVICES_FILE
 
-echo "Esperando conexiones mDNS/TCP desde el celular..."
+# Función para procesar comandos sin bloquear
+procesar_accion() {
+    local comando=$1
+    case $comando in
+        "mouse_click")
+            xdotool click 1 & ;;
+        "teclado")
+            xdotool type "$(cat /tmp/conor_input 2>/dev/null)" & ;;
+        "pantalla")
+            # Optimizado para bajo consumo: baja resolución y frame rate estable
+            ffmpeg -f x11grab -r 15 -s 1280x720 -i :0.0 -f mpegts udp://127.0.0.1:1234 & ;;
+        *)
+            # Si no es un comando conocido, lo tratamos como conexión de dispositivo
+            echo "{\"ip\": \"$comando\", \"nombre\": \"Dispositivo-$comando\", \"estado\": \"vinculado\"}" > $DEVICES_FILE
+            echo "Dispositivo $comando registrado." >> $LOG_FILE
+            ;;
+    esac
+}
 
-# Bucle infinito para que el servicio nunca se detenga
+# Bucle principal: escucha todo el tráfico en el puerto
 while true; do
-    # Escucha la conexión entrante y extrae la IP del dispositivo que intenta conectar
-    # Usamos nc para detectar y registrar el dispositivo automáticamente
-    connection=$(nc -l -p $PORT -v 2>&1 | grep "connect from" | awk '{print $3}')
-    
-    if [ ! -z "$connection" ]; then
-        echo "Conexión detectada desde: $connection"
-        
-        # Registrar el dispositivo en el archivo JSON si no existe
-        # Esto permite que la GUI muestre el nombre del dispositivo automáticamente
-        echo "{\"ip\": \"$connection\", \"nombre\": \"Dispositivo-$connection\", \"estado\": \"vinculado\"}" > $DEVICES_FILE
-        
-        echo "Dispositivo $connection registrado para auto-vinculación."
+    # Usamos nc para leer la entrada, procesamos línea por línea
+    # Esto permite que el daemon nunca deje de escuchar nuevas conexiones
+    if entrada=$(nc -l -p $PORT); then
+        echo "Comando/IP recibido: $entrada"
+        # Enviamos a proceso en background para no detener el daemon
+        procesar_accion "$entrada" &
     fi
-    
-    echo "Procesando conexión..."
 done
