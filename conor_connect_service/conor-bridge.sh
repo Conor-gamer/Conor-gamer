@@ -1,28 +1,23 @@
 #!/bin/bash
 
 # --- Conor Bridge: Puente de alta velocidad ---
-# Este script comunica el teléfono con el Daemon principal.
-# Es la vía rápida para enviar comandos de teclado, mouse o control.
+# Transmite comandos del teléfono al Daemon con latencia casi cero
 
-# Dirección y puerto de comunicación
 PORT=8080
 DAEMON_IP="127.0.0.1"
 
-# Función de envío ultra rápido
-# -w 1: Fuerza a netcat a cerrar la conexión en 1 segundo si no recibe respuesta
-# > /dev/null 2>&1: Mantiene el script silencioso para no cargar el procesador
+# Función para enviar comandos al Daemon de forma instantánea
 enviar_al_daemon() {
     local comando=$1
-    if [ -n "$comando" ]; then
-        echo "$comando" | nc -w 1 $DAEMON_IP $PORT > /dev/null 2>&1
-    fi
+    # Usamos netcat para inyectar el comando al daemon y cerrar la conexión al instante
+    echo "$comando" | nc -w 1 $DAEMON_IP $PORT > /dev/null 2>&1
 }
 
-# Validación para asegurar que no se ejecute vacío
+# Comprobación rápida de parámetros
 if [ -z "$1" ]; then
-    echo "Uso: ./conor-bridge.sh [comando_accion]"
+    echo "Uso: ./conor-bridge.sh [comando]"
     exit 1
 fi
 
-# Ejecutar el comando recibido
+# Ejecución rápida
 enviar_al_daemon "$1"
