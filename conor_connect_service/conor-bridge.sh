@@ -1,46 +1,28 @@
 #!/bin/bash
 
-# --- Conor Connect: Instalador de Ultra Potencia ---
+# --- Conor Bridge: Puente de alta velocidad ---
+# Este script comunica el teléfono con el Daemon principal.
+# Es la vía rápida para enviar comandos de teclado, mouse o control.
 
-# Definir colores para feedback profesional
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-NC='\033[0m'
+# Dirección y puerto de comunicación
+PORT=8080
+DAEMON_IP="127.0.0.1"
 
-echo -e "${GREEN}Iniciando instalación de Conor Connect...${NC}"
+# Función de envío ultra rápido
+# -w 1: Fuerza a netcat a cerrar la conexión en 1 segundo si no recibe respuesta
+# > /dev/null 2>&1: Mantiene el script silencioso para no cargar el procesador
+enviar_al_daemon() {
+    local comando=$1
+    if [ -n "$comando" ]; then
+        echo "$comando" | nc -w 1 $DAEMON_IP $PORT > /dev/null 2>&1
+    fi
+}
 
-# 1. Verificar dependencias del sistema (Instalación automática de herramientas base)
-echo "Verificando dependencias necesarias..."
-sudo apt update && sudo apt install -y xdotool ffmpeg netcat-traditional || echo -e "${RED}Error al instalar dependencias base${NC}"
-
-# 2. Preparar estructura de carpetas
-echo "Configurando directorios..."
-sudo mkdir -p /opt/conor-connect/assets
-sudo mkdir -p /var/log/conor-connect/
-
-# 3. Despliegue de archivos
-echo "Desplegando componentes..."
-sudo cp conor-daemon /opt/conor-connect/
-sudo cp conor-bridge.sh /opt/conor-connect/
-sudo cp conor-rgb.sh /opt/conor-connect/
-sudo cp icon.png /opt/conor-connect/assets/
-# Asegurar que el archivo de configuración exista para evitar errores
-sudo touch /opt/conor-connect/config.json
-sudo chmod 666 /opt/conor-connect/config.json
-
-# 4. Configuración del Servicio de Sistema
-echo "Instalando servicio systemd..."
-sudo cp conor-connect.service /etc/systemd/system/
-
-# 5. Permisos de seguridad y ejecución
-echo "Aplicando permisos de ejecución..."
-sudo chmod +x /opt/conor-connect/*
-
-# 6. Activación del servicio con manejo de errores
-echo "Activando el corazón del sistema..."
-sudo systemctl daemon-reload
-if sudo systemctl enable conor-connect && sudo systemctl restart conor-connect; then
-    echo -e "${GREEN}¡Instalación exitosa! Conor Connect está corriendo al máximo rendimiento.${NC}"
-else
-    echo -e "${RED}Error al activar el servicio. Revisa los logs en /var/log/syslog${NC}"
+# Validación para asegurar que no se ejecute vacío
+if [ -z "$1" ]; then
+    echo "Uso: ./conor-bridge.sh [comando_accion]"
+    exit 1
 fi
+
+# Ejecutar el comando recibido
+enviar_al_daemon "$1"
