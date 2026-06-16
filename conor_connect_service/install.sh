@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# --- Conor Connect: Instalador de Ultra Potencia (Actualizado) ---
+# --- Conor Connect: Instalador de Ultra Potencia (Final y Profesional) ---
 
 # Definir colores para feedback profesional
 GREEN='\033[0;32m'
@@ -17,6 +17,10 @@ sudo apt update && sudo apt install -y xdotool ffmpeg netcat-traditional || echo
 echo "Configurando directorios..."
 sudo mkdir -p /opt/conor-connect/assets
 sudo mkdir -p /var/log/conor-connect/
+
+# --- Preparación del archivo de LOG ---
+sudo touch /var/log/conor-connect/conor.log
+sudo chmod 666 /var/log/conor-connect/conor.log
 
 # 3. Despliegue de archivos desde las nuevas carpetas
 echo "Desplegando componentes..."
