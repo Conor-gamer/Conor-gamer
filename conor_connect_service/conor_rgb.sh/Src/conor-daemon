@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# --- Conor Daemon PRO: Ultra Potente ---
+# Gestiona detección automática, registro de dispositivos y ejecución de comandos
+
+PORT=8080
+LOG_FILE="/var/log/conor-connect.log"
+DEVICES_FILE="/opt/conor-connect/devices.json"
+
+echo "Iniciando Daemon PRO..."
+touch $DEVICES_FILE
+
+# Función para procesar comandos sin bloquear
+procesar_accion() {
+    local comando=$1
+    case $comando in
+        "mouse_click")
+            xdotool click 1 & ;;
+        "teclado")
+            xdotool type "$(cat /tmp/conor_input 2>/dev/null)" & ;;
+        "pantalla")
+            # Optimizado para bajo consumo: baja resolución y frame rate estable
+            ffmpeg -f x11grab -r 15 -s 1280x720 -i :0.0 -f mpegts udp://127.0.0.1:1234 & ;;
+        *)
+            # Si no es un comando conocido, lo tratamos como conexión de dispositivo
+            echo "{\"ip\": \"$comando\", \"nombre\": \"Dispositivo-$comando\", \"estado\": \"vinculado\"}" > $DEVICES_FILE
+            echo "Dispositivo $comando registrado." >> $LOG_FILE
+            ;;
+    esac
+}
+
+# Bucle principal: escucha todo el tráfico en el puerto
+while true; do
+    # Usamos nc para leer la entrada, procesamos línea por línea
+    # Esto permite que el daemon nunca deje de escuchar nuevas conexiones
+    if entrada=$(nc -l -p $PORT); then
+        echo "Comando/IP recibido: $entrada"
+        # Enviamos a proceso en background para no detener el daemon
+        procesar_accion "$entrada" &
+    fi
+done
+
